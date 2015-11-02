@@ -19,3 +19,5 @@ Python program to translate English to bash shell code.
 2. http://www.slideshare.net/japerk/nltk-in-20-minutes 
 3. https://www.kaggle.com/c/word2vec-nlp-tutorial/details/part-1-for-beginners-bag-of-words
 4. http://pythonprogramming.net/tokenizing-words-sentences-nltk-tutorial/
+5. http://www.nltk.org/book/ch08.html
+  - From 3.1 on is about creating grammars.
