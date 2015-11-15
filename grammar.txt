@@ -1,39 +1,27 @@
 CmdList -> Cmd Sep CmdList | Cmd
+Sep -> "and" | "then"
 Cmd -> "move" FileExp "to" Dir
-FileExp -> FileList | Quantifier Loc
-FileList -> File, File List
-
-Cmd ->  "print" <file>
-        | "show" <file>
-        | "open" <file>
-
-        | "write" <string> "to" <file>
-        | "put" <string> "into" <file>
-
-        | "go" "to" <DirList>
-
-        | "open" <directory>
-        | "what" "is" "in" <directory>
-
-        | "copy" <file>[, <file2>, …[,] "and" <fileN>] "to" <directory>
-
-        | "delete" <file>[, <file2>, …[,] "and" <fileN>]
-        | "delete" <directory> [<directory2>, …[,] "and" <directoryN>]
-        | "rename" <file> "to" <name>
-
-        | "move" <file>[, <file2>, …[,] "and" <fileN>] "to" <directory>
-
-        | "where" "am" "i"
-        | "what" "directory" "am" "i" "in"
-
-        | "new" "folder" <name>
-
-        | "find" <file>
-
-        | "clear" "history"
-
-        //| "undo"
-
-        | "go" "home"
-
-        | "go" "back"
+FileExp -> FileList | Quantifier Dir
+Qauntifier -> "all files" | "everything"
+FileList -> File "," FileList | FilePair | File
+FilePair -> File "and" File
+Cmd ->  "print" File
+        | "show" File
+        | "open" File
+        | "write" String "to" File
+        | "put" String "into" File
+        | "go to" DirList
+        | "open" Dir
+        | "what is in" Dir
+        | "copy" FileList "to" Dir
+        | "delete" FileList
+        | "delete" DirList
+        | "rename" File "to" <name>
+        | "move" FileList "to" Dir
+        | "where am i"
+        | "what directory am i in"
+        | "new folder" String
+        | "find" File
+        | "clear history"
+        | "go home"
+        | "go back"
