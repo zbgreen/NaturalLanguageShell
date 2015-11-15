@@ -27,7 +27,7 @@ Python program to translate English to bash shell code.
 
 
 ## Big list of Part of Speech (POS) tagging identifiers:
-(This list can be found by running ```print(nltk.help.upenn_tagset())``` )
+This list can be found by running ```print(nltk.help.upenn_tagset())``` 
 
 ### CC: conjunction, coordinating
     & 'n and both but either et for less minus neither nor or plus so
