@@ -1,1 +1,41 @@
-CmdList -> Cmd
+CmdList -> Cmd Sep CmdList | Cmd
+Cmd -> "move" File Exp "to" Dir
+File Exp -> File List | Quantifier Loc
+File List -> File, File List
+
+Cmd ->    "print" <file>
+        | "show" <file>
+        | "open" <file>
+
+        | "write" <string> "to" <file>
+        | "put" <string> "into" <file>
+
+        | "go" "to" <directory>
+
+        | "open" <directory>
+        | "what" "is" "in" <directory>
+
+        | "copy" <file>[, <file2>, …[,] "and" <fileN>] "to" <directory>
+
+        | "delete" <file>[, <file2>, …[,] "and" <fileN>]
+
+        | "delete" <directory> [<directory2>, …[,] "and" <directoryN>]
+
+        | "rename" <file> "to" <name>
+
+        | "move" <file>[, <file2>, …[,] "and" <fileN>] "to" <directory>
+
+        | "where" "am" "i"
+        | "what" "directory" "am" "i" "in"
+
+        | "new" "folder" <name>
+
+        | "find" <file>
+
+        | "clear" "history"
+
+        | "undo"
+
+        | "go" "home"
+
+        | "go" "back"
