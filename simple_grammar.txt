@@ -3,16 +3,19 @@ format:
 Natural language command
 Shell command
 
-print <file>
+(print|show|open) <file>
 cat <file>
 
 (write|echo|output) <string> to <file>
 echo <string> >> <file>
 
+put <string> into <file>
+echo <string> >> <file>
+
 go to <directory>
 cd <directory>
 
-open <directory>
+(open|what is in) <directory>
 cd <directory>; ls
 
 copy <file>[, <file2>, …[,] and <fileN>] to <directory>
@@ -29,6 +32,27 @@ mv <file> <name>
 
 move <file>[, <file2>, …[,] and <fileN>] to <directory>
 mv <file> [<file2> ... <fileN>] <directory>
+
+where am i, what directory am i in
+pwd
+
+new folder <name>
+mkdir <name>
+
+find <file>
+find <file>
+
+clear history
+history -c
+
+undo
+echo "Too Bad"
+
+go home
+cd ~
+
+go back
+cd ..
 
 ----
 
