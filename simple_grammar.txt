@@ -43,6 +43,16 @@ find <file>
 find <file>
 
 clear history
+history -c
+
+undo
+echo "Too Bad"
+
+go home
+cd ~
+
+go back
+cd ..
 
 ----
 
