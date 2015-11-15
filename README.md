@@ -21,11 +21,13 @@ Python program to translate English to bash shell code.
 4. http://pythonprogramming.net/tokenizing-words-sentences-nltk-tutorial/
 5. http://www.nltk.org/book/ch08.html
   - From 3.1 on is about creating grammars.
+6. http://www.nltk.org/book/ch05.html
+  - This is about Part of Speech (POS) tagging. So far has been VERY helpful.
 
 
 
 ## Big list of Part of Speech (POS) tagging identifiers:
-(This list can be found by running ```print(nltk.help.upenn_tagset())``` )
+This list can be found by running ```print(nltk.help.upenn_tagset())``` 
 
 ### CC: conjunction, coordinating
     & 'n and both but either et for less minus neither nor or plus so
