@@ -42,24 +42,25 @@ class Shell():
         except TypeError:
             print("Must pass string type.")
 
-    def cd_home(self):
+    #Change directory to root
+    def cd_root(self):
         os.chdir("/")
         call("ls")
         self.cmd.append("cd")
 
-    #Go to the given directory. Incorrect directory doesn't cause errors so
-    #check_output is used to check return code for success.
-    def cd(self, dir):
-        s = "cd " + dir
-        output = check_output(s, shell=True)
-        if output == 0:
-            print(self.output)
-        else:
-            print("Directory doesn't exist or can't be accessed.")
+    # #Go to the given directory. Incorrect directory doesn't cause errors so
+    # #check_output is used to check return code for success.
+    # def cd(self, dir):
+    #     s = "cd " + dir
+    #     output = check_output(s, shell=True)
+    #     if output == 0:
+    #         print(self.output)
+    #     else:
+    #         print("Directory doesn't exist or can't be accessed.")
 
     #Open the given directory. Incorrect directory doesn't cause errors so
     #check_output is used to check return code for success.
-    def cd_multi(self, dir):
+    def cd(self, dir):
         self.cmd = "cd " + dir + "; ls"
         output = check_output(self.cmd, shell=True)
         if output == 0:
@@ -108,5 +109,5 @@ s = Shell()
 #s.echo("t.txt", "foo")
 
 #In progress
-#s.cd_home()
+s.cd_root()
 
