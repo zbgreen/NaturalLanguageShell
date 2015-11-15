@@ -1,16 +1,16 @@
 CmdList -> Cmd Sep CmdList | Cmd
-Cmd -> "move" File Exp "to" Dir
-File Exp -> File List | Quantifier Loc
-File List -> File, File List
+Cmd -> "move" FileExp "to" Dir
+FileExp -> FileList | Quantifier Loc
+FileList -> File, File List
 
-Cmd ->    "print" <file>
+Cmd ->  "print" <file>
         | "show" <file>
         | "open" <file>
 
         | "write" <string> "to" <file>
         | "put" <string> "into" <file>
 
-        | "go" "to" <directory>
+        | "go" "to" <DirList>
 
         | "open" <directory>
         | "what" "is" "in" <directory>
@@ -18,9 +18,7 @@ Cmd ->    "print" <file>
         | "copy" <file>[, <file2>, …[,] "and" <fileN>] "to" <directory>
 
         | "delete" <file>[, <file2>, …[,] "and" <fileN>]
-
         | "delete" <directory> [<directory2>, …[,] "and" <directoryN>]
-
         | "rename" <file> "to" <name>
 
         | "move" <file>[, <file2>, …[,] "and" <fileN>] "to" <directory>
@@ -34,7 +32,7 @@ Cmd ->    "print" <file>
 
         | "clear" "history"
 
-        | "undo"
+        //| "undo"
 
         | "go" "home"
 
