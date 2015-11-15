@@ -317,7 +317,13 @@
       <option name="project" value="LOCAL" />
       <updated>1447630368018</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Using 1 object for all commands.&#10;Fixed incorrectly handled errors/exceptions&#10;Added use cases at bottom of shell.py">
+      <created>1447630382225</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1447630382225</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
