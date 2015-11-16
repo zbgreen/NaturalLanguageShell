@@ -1,6 +1,8 @@
 ## List of Use-Case Commands: 
 format:
+
 Natural language command
+
 Shell command
 
 ----------------------------------
