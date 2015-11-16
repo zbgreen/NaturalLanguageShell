@@ -8,8 +8,32 @@ from nltk.parse.generate import *
 
 # Also check out this link: http://www.nltk.org/howto/generate.html
 
+####################################
+'''First example of a grammar'''
+####################################
+
+grammar2 = nltk.CFG.fromstring("""
+  S -> NP VP
+  PP -> P NP
+  NP -> Det N | NP PP
+  VP -> V NP | VP PP
+  Det -> 'a' | 'the'
+  N -> 'dog' | 'cat'
+  V -> 'chased' | 'sat'
+  P -> 'on' | 'in'
+  """)
+
+for sentence in generate(grammar2, n=4):
+  print(' '.join(sentence))
+
+
+####################################
+'''Second example of our grammar'''
+####################################
+
 
 grammar = nltk.CFG.fromstring("""
+
   S -> Cmd | Cmd Sep S
 
   String -> "SOME_STRING"
@@ -34,11 +58,6 @@ grammar = nltk.CFG.fromstring("""
 
   Cmd -> "write" String "to" File | "show" File
 
-
-
-
-
-
 """)
 
 
@@ -47,6 +66,11 @@ grammar = nltk.CFG.fromstring("""
 
 for sentence in generate(grammar, n=4):
   print(' '.join(sentence))
+
+
+
+
+
 
 
 
