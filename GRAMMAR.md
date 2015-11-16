@@ -6,89 +6,122 @@ Shell command
 ----------------------------------
 
 
-
+```
 (print|show|open) <file>
 cat <file>
+```
 
 ----------------------------------
 
+```
 (write|echo|output) <string> to <file>
 echo <string> >> <file>
+```
 
 ----------------------------------
 
+```
 put <string> into <file>
 echo <string> >> <file>
+```
 
 ----------------------------------
 
+```
 go to <directory>
 cd <directory>
+```
 
 ----------------------------------
 
+```
 (open|what is in) <directory>
 cd <directory>; ls
+```
 
 ----------------------------------
 
+```
 copy <file>[, <file2>, …[,] and <fileN>] to <directory>
 cp [-r] <file> [<file2> ... <fileN>] <dir>
+```
 
 ----------------------------------
 
+```
 delete <file>[, <file2>, …[,] and <fileN>]
 rm <file> [<file2> ... <fileN>]
+```
 
 ----------------------------------
 
+```
 delete <directory> [<directory2>, …[,] and <directoryN>]
 rm -r <directory> [<directory2> ... <directoryN>]
+```
 
 ----------------------------------
 
+```
 rename <file> to <name>
 mv <file> <name>
+```
 
 ----------------------------------
 
+```
 move <file>[, <file2>, …[,] and <fileN>] to <directory>
 mv <file> [<file2> ... <fileN>] <directory>
+```
 
 ----------------------------------
 
+```
 where am i, what directory am i in
 pwd
+```
 
 ----------------------------------
 
+```
 new folder <name>
 mkdir <name>
+```
 
 ----------------------------------
 
+```
 find <file>
 find <file>
+```
 
 ----------------------------------
 
+```
 clear history
 history -c
+```
 
 ----------------------------------
 
+```
 undo
 echo "Too Bad"
+```
 
 ----------------------------------
 
+```
 go home
 cd ~
+```
 
 ----------------------------------
 
+```
 go back
 cd ..
+```
 
 ----------------------------------
 
