@@ -76,3 +76,40 @@ Command -> rename <File> to <string>
 
 TODO: define FileList (see ObjList definition) 
 TODO: define Path /dir/dir/.../file
+
+
+
+
+
+———
+
+Merging the contents of “grammar.txt” and “simple_grammar.txt” into one file.
+This potential grammar was updated & created by JP on Nov. 15th 2015 (?)
+
+CmdList -> Cmd Sep CmdList | Cmd
+Sep -> "and" | "then"
+Cmd -> "move" FileExp "to" Dir
+FileExp -> FileList | Quantifier Dir
+Quantifier -> "all files" | "everything"
+FileList -> File "," FileList | FilePair | File
+FilePair -> File "and" File
+Cmd ->  "print" File
+        | "show" File
+        | "open" File
+        | "write" String "to" File
+        | "put" String "into" File
+        | "go to" DirList
+        | "open" Dir
+        | "what is in" Dir
+        | "copy" FileList "to" Dir
+        | "delete" FileList
+        | "delete" DirList
+        | "rename" File "to" <name>
+        | "move" FileList "to" Dir
+        | "where am i"
+        | "what directory am i in"
+        | "new folder" String
+        | "find" File
+        | "clear history"
+        | "go home"
+        | "go back"
