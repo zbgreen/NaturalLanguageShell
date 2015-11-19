@@ -8,87 +8,205 @@ from subprocess import call, check_output, CalledProcessError
 
 class Shell():
     """
-    Id for refrencing previous commands. Call methods to execute the command.
-    Executes the command using given inputs and prints out the bash command
-    used.
+    Call methods to execute the command.
+    Executes the command using given inputs, stores cmd and prints results.
+
+    cmd: for refrencing previous commands.
     """
     def __init__(self):
         self.cmd = []
 
-    # #Clear history.
-    # def c_history(self):
-    #     call("history", shell=True)
+    """
+    Clears current class's representation of history. Does not clear the bash
+    history since Python runs sh.
+    """
+    def c_history(self):
+        self.cmd[:] = []
 
-    #See what user is running the commands
+    """
+    See what user is running the commands.
+    """
     def whoami(self):
-        print(check_output(["whoami"]))
+        print(call(["whoami"]))
         self.cmd.append("whoami")
 
-    #Calls cat to print the given file
+    """
+    Print current directory.
+    """
+    def ls(self):
+        call("ls")
+        self.cmd.append("ls")
+
+    """
+    Calls cat to print the given file.
+    """
     def cat(self, file):
         try:
-            print(check_output(["cat", file]))
+            print(call(["cat", file]))
             self.cmd.append("cat " + file)
         except CalledProcessError:
             print("Invalid File name.")
 
-    #Writes string to end of given file if it exists.
-    #If file doesn't exist it will create new file with given text.
+    """
+    Writes string to end of given file if it exists.
+    If file doesn't exist it will create new file with given text.
+    """
     def echo(self, file, str):
         try:
-            s = "echo " + str + " >> " + file
-            check_output(s, shell=True)
-            self.cmd.append(s)
+            cmd = "echo " + str + " >> " + file
+            call(cmd, shell=True)
+            #Manually call cat to print file to avoid having cmd added to list.
+            print(call(["cat", file]))
+            self.cmd.append(cmd)
         except TypeError:
             print("Must pass string type.")
 
-    #Change directory to root
+    """
+    Change directory to root.
+    """
     def cd_root(self):
         os.chdir("/")
         call("ls")
         self.cmd.append("cd")
 
-    # #Go to the given directory. Incorrect directory doesn't cause errors so
-    # #check_output is used to check return code for success.
-    # def cd(self, dir):
-    #     s = "cd " + dir
-    #     output = check_output(s, shell=True)
-    #     if output == 0:
-    #         print(self.output)
-    #     else:
-    #         print("Directory doesn't exist or can't be accessed.")
+    """
+    Change directory to home.
+    """
+    def cd_h(self):
+        os.chdir("/home")
+        call("ls")
+        self.cmd.append("cd ~")
 
-    #Open the given directory. Incorrect directory doesn't cause errors so
-    #check_output is used to check return code for success.
+    # """
+    # Go back a directory. Currently not implemented due to not having directory
+    # history.
+    # """
+    # def cd_b(self):
+    #     print()
+
+    """
+    Go to the given directory.
+    """
     def cd(self, dir):
-        self.cmd = "cd " + dir + "; ls"
-        output = check_output(self.cmd, shell=True)
-        if output == 0:
-            print(self.cmd)
-        else:
-            print("Directory doesn't exist or can't be accessed.")
+        try:
+            os.chdir(dir)
+            call("ls")
+            self.cmd.append("cd " + dir)
+        except FileNotFoundError:
+            print("The file or directory " + dir + " doesn't exist.")
 
-    #Copy 1 file to a given destination.
-    def cp(self, file, dest):
-        self.cmd = "cp " + file + dest
-        output = check_output(self.cmd, shell=True)
-        if output == 0:
-            print(self.cmd)
-        else:
-            print("Source file doesn't exist or can't be accessed.")
+    """
+    Copies 1 or more files from a list to a given destination. Prints contents
+    of the directory without changing to it.
+    """
+    def cp(self, files, dest):
+        try:
+            #copy files to given destination
+            cmd = "cp"
+            for file in files:
+                cmd += " " + file
+            cmd += " " + dest
+            call(cmd, shell=True)
 
-    #Copies multiple files to a given destination.
-    def cp_multi(self, files, dest):
-        self.cmd = "cp "
-        for file in len(files):
-            self.cmd = self.cmd + " " + file
-        self.cmd = " " + dest
-        output = check_output(self.cmd, shell=True)
-        if output == 0:
-            print(self.cmd)
-        else:
-            print("1 or more source files don't exist or can't be accessed.")
+            #print given directory without changing current directory
+            newCmd = "ls " + dest
+            call(newCmd, shell=True)
+        except FileNotFoundError:
+            print("File(s) or destination don't exist or can't be accessed.")
 
+    """
+    Print current directory name
+    """
+    def pwd(self):
+        print(call(["pwd"]))
+        self.cmd.append("pwd")
+
+    """
+    Delete 1 or more files. Prints names of deleted files.
+    """
+    def rm_f(self, files):
+        try:
+            cmd = "rm"
+            for file in files:
+                cmd += " " + file
+            call(cmd, shell=True)
+            print(str(files) + " file(s) been deleted.")
+            self.cmd.append(cmd)
+        except FileNotFoundError:
+            print("File(s) don't exist or can't be accessed.")
+
+    """
+    Delete 1 or more directories. Prints names of directories that were
+    successfully deleted.
+    """
+    def rm_d(self, dirs):
+        try:
+            cmd = "rm -r"
+            for dir in dirs:
+                cmd += " " + dir
+            call(cmd, shell=True)
+            self.cmd.append(cmd)
+            print(str(dirs) + " has/have been deleted.")
+        except FileNotFoundError:
+            print("1 or more Directories don't exist or can't be accessed.")
+
+    """
+    Rename file to given name. Must not be same name.
+    """
+    def mv_rename(self, file, name):
+        try:
+            call(["mv", file, name])
+            print(file + " has been renamed to " + name)
+            self.cmd.append("mv " + file + " " + name)
+        except FileNotFoundError:
+            print("File not found.")
+
+    """
+    Move file(s) to given directory. Directory must be checked to ensure that
+    file doesn't get renamed to non-existing directory name. Prints updated
+    directory.
+    """
+    def mv(self, files, dir):
+        try:
+            #Test directory to make sure it exists.
+            testDir = "-d " + dir
+            call(testDir, shell=True)
+
+            #Directory exists so continue.
+            cmd = "mv"
+            for file in files:
+                cmd += " " + file
+            cmd += " " + dir
+            print(cmd)
+            call(cmd, shell=True)
+
+            #print updated directory
+            upDir = "ls " + dir
+            print(call(upDir, shell=True))
+            self.cmd.append(cmd)
+        except FileNotFoundError:
+            print("File(s) or directory don't exist or can't be accessed.")
+
+    """
+    Make new directory. Print new directory name.
+    """
+    def mkdir(self, name):
+        call(["mkdir", name])
+        print("New directory " + name + " has been created.")
+        self.cmd.append("mkdir " + name)
+
+    """
+    Find given file. Print out given file.
+    """
+    def find(self, file):
+        try:
+            call(["find", file])
+            call(["cat", file])
+            self.cmd.append("find " + file)
+        except FileNotFoundError:
+            print("File not found.")
+
+#Initialize object
 s = Shell()
 
 #done
@@ -106,8 +224,65 @@ s = Shell()
 #Add string to end of file
 #s.echo("test.txt", "foo")
 #Create new file from given string
-#s.echo("t.txt", "foo")
+# s.echo("t.txt", "foo")
 
-#In progress
-s.cd_root()
+#cd to root
+#s.cd_root()
+#cd to home
+# s.cd_h()
+#cd back a directory
+s.cd("/home/zach/PycharmProjects")
+s.cd_b()
+#cd to given directory
+#s.cd("/home")
 
+#Copy file to existing file
+#s.cp("test.txt", "t.txt")
+#Copy file and create new copy
+#s.cp("test.txt", "a.txt")
+
+#Copy file to given destination
+# file =["test.txt"]
+# s.cp(file, "~/CS480")
+#Copy multiple files to given destination
+# files = ["test.txt", "t.txt"]
+# s.cp(files, "~/CS480")
+
+#Print current directory name
+#s.pwd()
+
+#Delete file
+# file = ["t.txt"]
+# s.rm_f(file)
+#Delete multiple files
+# files = ["t.txt", "test.txt"]
+# s.rm_f(files)
+
+#Delete directory
+# dir = ["dirTest"]
+# s.rm_d(dir)
+#Delete directories
+# dirs = ["dirTest", "dirTest2"]
+# s.rm_d(dirs)
+
+#Rename file to given name
+# s.mv_rename("~/CS480", "t.txt")
+
+#Move file to directory
+# file = ["t.txt"]
+# s.mv(file, "~CS480")
+#Move files to directory. -d is currently an illegal option but works.
+# files = ["t.txt", "test.txt"]
+# s.mv(files, "~/CS480")
+
+#Print current directory
+#s.ls()
+
+#Create new directory
+# s.mkdir("dir")
+
+#Find file
+# s.find("t.txt")
+
+#Clear history
+s.c_history()
