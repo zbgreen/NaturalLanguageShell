@@ -29,6 +29,24 @@ Python program to translate English to bash shell code.
 ## Big list of Part of Speech (POS) tagging identifiers:
 This list can be found by running ```print(nltk.help.upenn_tagset())``` 
 
+
+
+### $: dollar
+    $ -$ --$ A$ C$ HK$ M$ NZ$ S$ U.S.$ US$
+### '': closing quotation mark
+    ' ''
+### (: opening parenthesis
+    ( [ {
+### ): closing parenthesis
+    ) ] }
+### ,: comma
+    ,
+### --: dash
+    --
+### .: sentence terminator
+    . ! ?
+### :: colon or ellipsis
+    : ; ...
 ### CC: conjunction, coordinating
     & 'n and both but either et for less minus neither nor or plus so
     therefore times v. versus vs. whether yet
