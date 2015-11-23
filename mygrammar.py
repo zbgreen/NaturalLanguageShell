@@ -19,7 +19,6 @@ Quantifier -> "all files" | "everything"
 FileList -> File "," FileList | FilePair | File
 FilePair -> File "and" File
 Cmd -> "print" File
-Cmd -> "print" File
 Cmd ->  "show" File
 Cmd ->  "open" File
 Cmd ->  "write" String "to" File
