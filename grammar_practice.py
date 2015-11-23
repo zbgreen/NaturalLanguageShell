@@ -68,43 +68,7 @@ for sentence in generate(grammar, n=4):
   print(' '.join(sentence))
 
 
-
-
-
-
-
-
 # A potential grammar to be adapted. Currently doesn't port over to NLTK's grammar
 # creation perfectly, but it's a work in progress...
-'''
 
-CmdList -> Cmd Sep CmdList | Cmd
-Sep -> "and" | "then"
-Cmd -> "move" FileExp "to" Dir
-FileExp -> FileList | Quantifier Dir
-Qauntifier -> "all files" | "everything"
-FileList -> File "," FileList | FilePair | File
-FilePair -> File "and" File
-Cmd ->  "print" File
-        | "show" File
-        | "open" File
-        | "write" String "to" File
-        | "put" String "into" File
-        | "go to" DirList
-        | "open" Dir
-        | "what is in" Dir
-        | "copy" FileList "to" Dir
-        | "delete" FileList
-        | "delete" DirList
-        | "rename" File "to" <name>
-        | "move" FileList "to" Dir
-        | "where am i"
-        | "what directory am i in"
-        | "new folder" String
-        | "find" File
-        | "clear history"
-        | "go home"
-        | "go back"
-
-
-'''
+# moved to mygrammar.py
