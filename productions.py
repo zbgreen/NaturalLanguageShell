@@ -26,6 +26,8 @@ grammar2 = nltk.CFG.fromstring("""
 for sentence in generate(grammar2, n=4):
   print(' '.join(sentence))
 
+print(grammar2.productions());
+
 
 ####################################
 '''Second example of our grammar'''
@@ -33,18 +35,31 @@ for sentence in generate(grammar2, n=4):
 
 
 grammar = nltk.CFG.fromstring("""
+
   S -> Cmd | Cmd Sep S
+
   String -> "SOME_STRING"
+
   Sep -> "then"
+
   Prep -> "in" | "to"
+
   Dir -> "SOME_DIRECTORY"
+
   DirList -> "SOME_DIRECTORY_LIST"
+
   File -> "FILE_NAME"
+
   FileExp -> FileList | Quantifier Prep Dir
+
   Quantifier -> "EVERYTHING"
+
   FileList -> File "," FileList | FilePair | File
+
   FilePair -> File "and" File
+
   Cmd -> "write" String "to" File | "show" File
+
 """)
 
 
