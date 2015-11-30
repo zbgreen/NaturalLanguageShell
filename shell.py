@@ -37,43 +37,47 @@ class Shell():
 
         self.dir.append(dir)
 
-    """
-    Clears current class's representation of history. Does not clear the bash
-    history since Python runs sh.
-    """
+
     def c_history(self):
+        """
+        Clears current class's representation of history. Does not clear the bash
+        history since Python runs sh.
+        """
         self.cmd[:] = []
         print("History deleted.")
 
-    """
-    See what user is running the commands.
-    """
+
     def whoami(self):
+        """
+        See what user is running the commands.
+        """
         print(call(["whoami"]))
         self.cmd.append("whoami")
 
-    """
-    Print current directory.
-    """
+
     def ls(self):
+        """
+        Print current directory.
+        """
         call("ls")
         self.cmd.append("ls")
 
-    """
-    Calls cat to print the given file.
-    """
+
     def cat(self, file):
+        """
+        Calls cat to print the given file.
+        """
         try:
             print(call(["cat", file]))
             self.cmd.append("cat " + file)
         except CalledProcessError:
             print("Invalid File name.")
 
-    """
-    Writes string to end of given file if it exists.
-    If file doesn't exist it will create new file with given text.
-    """
     def echo(self, file, str):
+        """
+        Writes string to end of given file if it exists.
+        If file doesn't exist it will create new file with given text.
+        """
         try:
             cmd = "echo " + str + " >> " + file
             call(cmd, shell=True)
@@ -83,29 +87,31 @@ class Shell():
         except TypeError:
             print("Must pass string type.")
 
-    """
-    Change directory to root.
-    """
+
     def cd_root(self):
+        """
+        Change directory to root.
+        """
         os.chdir("/")
         call("ls")
         self.cmd.append("cd")
         self.dir.append("/")
 
-    """
-    Change directory to home.
-    """
+
     def cd_h(self):
+        """
+        Change directory to home.
+        """
         os.chdir("/home")
         call("ls")
         self.cmd.append("cd ~")
         self.dir.append("/home")
 
-    """
-    Go back a directory. Prints name of current directory.
-    """
-    def cd_b(self):
 
+    def cd_b(self):
+        """
+        Go back a directory. Prints name of current directory.
+        """
         try:
             #Pop current directory
             del self.dir[-1]
@@ -117,10 +123,11 @@ class Shell():
         except IndexError:
             print("No directory to go back to.")
 
-    """
-    Go to the given directory.
-    """
+
     def cd(self, dir):
+        """
+        Go to the given directory.
+        """
         try:
             os.chdir(dir)
             call("ls")
@@ -129,11 +136,12 @@ class Shell():
         except FileNotFoundError:
             print("The file or directory " + dir + " doesn't exist.")
 
-    """
-    Copies 1 or more files from a list to a given destination. Prints contents
-    of the directory without changing to it.
-    """
+
     def cp(self, files, dest):
+        """
+        Copies 1 or more files from a list to a given destination. Prints contents
+        of the directory without changing to it.
+        """
         try:
             #copy files to given destination
             cmd = "cp"
@@ -150,18 +158,20 @@ class Shell():
         except FileNotFoundError:
             print("File(s) or destination don't exist or can't be accessed.")
 
-    """
-    Print current directory name
-    """
+
     def pwd(self):
+        """
+        Print current directory name
+        """
         print(call(["pwd"]))
         self.cmd.append("pwd")
 
-    """
-    Delete 1 or more directories or files. Prints names of directories that were
-    successfully deleted.
-    """
+
     def rm(self, list):
+        """
+        Delete 1 or more directories or files. Prints names of directories that were
+        successfully deleted.
+        """
         try:
             cmd = "rm -r"
             for element in list:
@@ -172,10 +182,11 @@ class Shell():
         except FileNotFoundError:
             print("1 or more Directories don't exist or can't be accessed.")
 
-    """
-    Rename file to given name. Must not be same name.
-    """
+
     def mv_rename(self, file, name):
+        """
+        Rename file to given name. Must not be same name.
+        """
         try:
             call(["mv", file, name])
             print(file + " has been renamed to " + name)
@@ -183,12 +194,13 @@ class Shell():
         except FileNotFoundError:
             print("File not found.")
 
-    """
-    Move file(s) to given directory. Directory must be checked to ensure that
-    file doesn't get renamed to non-existing directory name. Prints updated
-    directory.
-    """
+
     def mv(self, files, dir):
+        """
+        Move file(s) to given directory. Directory must be checked to ensure that
+        file doesn't get renamed to non-existing directory name. Prints updated
+        directory.
+        """
         try:
             #Test directory to make sure it exists.
             testDir = "-d " + dir
@@ -208,18 +220,20 @@ class Shell():
         except FileNotFoundError:
             print("File(s) or directory don't exist or can't be accessed.")
 
-    """
-    Make new directory. Print new directory name.
-    """
+
     def mkdir(self, name):
+        """
+        Make new directory. Print new directory name.
+        """
         call(["mkdir", name])
         print("New directory " + name + " has been created.")
         self.cmd.append("mkdir " + name)
 
-    """
-    Find given file. Print out given file.
-    """
+
     def find(self, file):
+        """
+        Find given file. Print out given file.
+        """
         try:
             check_output(["find", file])
             call(["cat", file])
@@ -227,17 +241,17 @@ class Shell():
         except CalledProcessError:
             print("File not found!.")
 
-
-    """
-    Get directory list.
-    """
     def get_dir(self):
+        """
+        Find given file. Print out given file.
+        """
         return self.dir
 
-    """
-    Get command list.
-    """
+
     def get_cmd(self):
+        """
+        Get command list.
+        """
         return self.cmd
 
 #Initialize object
