@@ -7,7 +7,13 @@ from nltk.parse.generate import *
 
 
 # regex tagger
-
+pattern = [
+	(r'(|||||)$', ''),
+	(r'()$', ''),
+	(r'()$', ''),
+	(r'()$', ''),
+	(r'"[^\]]*"$', '')
+]
 
 # based on Aaron's grammar
 grammar = nltk.CFG.fromstring("""
