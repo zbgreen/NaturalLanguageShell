@@ -6,7 +6,6 @@ from nltk.corpus import *
 from nltk.parse.generate import *
 
 # based on Aaron's grammar
-
 grammar = nltk.CFG.fromstring("""
 S -> Cmd | Cmd Sep S
 Sep -> "then"
@@ -17,25 +16,32 @@ Cmd -> "show" File
 Cmd -> "open" File
 Cmd -> "put" String "into" File
 Cmd -> "rename" File "to" String
-Cmd -> "rename" File "to" String
 Cmd -> "open" Dir
-Cmd -> "what is in" Dir
-Cmd -> "where am i"
-Cmd -> "what directory am i in"
-Cmd -> "new folder" String
 Cmd -> "find" File
-Cmd -> "clear history"
-Cmd -> "go home"
-Cmd -> "go back"
 Cmd -> "delete" Dir
-Cmd -> "go to" Dir
 Cmd -> "copy" File "to" Dir
 Cmd -> "delete" File
 Cmd -> "move" File "to" Dir
+Cmd -> "where" "am" "i"
+Cmd -> "new" "folder" String
+Cmd -> "clear" "history"
+Cmd -> "go" "home"
+Cmd -> "go" "back"
+Cmd -> "go" "to" Dir
+Cmd -> "what" "directory" "am" "i" "in"
+Cmd -> "what" "is" "in" Dir
 String -> "SOME_STRING"
 Dir -> "SOME_DIRECTORY"
 File -> "FILE_NAME"
 """)
+
+# The following didn't work:
+# delete SOME_DIRECTORY
+# where am i
+# new folder SOME_STRING
+# clear history
+# go home
+# go back
 
 # CHANGED FileList TO File
 # Cmd -> "copy" File "to" Dir

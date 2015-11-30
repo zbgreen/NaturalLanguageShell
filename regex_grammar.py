@@ -8,8 +8,8 @@ from nltk.parse.generate import *
 
 # regex tagger
 pattern = [
-	(r'(|||||)$', ''),
-	(r'()$', ''),
+	(r'(go|write|print|copy|delete|open)$', 'FIRST_WORD'),
+	(r'()$', 'PREP'),
 	(r'()$', ''),
 	(r'()$', ''),
 	(r'"[^\]]*"$', '')
@@ -18,10 +18,7 @@ pattern = [
 # based on Aaron's grammar
 grammar = nltk.CFG.fromstring("""
 S -> Cmd | Cmd Sep S
-Sep -> "then" 
-FileExp -> FileList | Quantifier "in" Dir
-Quantifier -> "EVERYTHING" | "all files"
-FileList -> File "," FileList | File "and" File | File
+Sep -> "then"
 FilePair -> File "and" File
 Cmd -> "write" String "to" File
 Cmd -> "print" File
@@ -30,34 +27,39 @@ Cmd -> "open" File
 Cmd -> "put" String "into" File
 Cmd -> "rename" File "to" String
 Cmd -> "open" Dir
-
 Cmd -> "what is in" Dir
 Cmd -> "where am i"
 Cmd -> "what directory am i in"
-
 Cmd -> "new folder" String
 Cmd -> "find" File
 Cmd -> "clear history"
 Cmd -> "go home"
 Cmd -> "go back"
-
+Cmd -> "delete" Dir
+Cmd -> "go to" Dir
+Cmd -> "copy" File "to" Dir
+Cmd -> "delete" File
+Cmd -> "move" File "to" Dir
 String -> "SOME_STRING"
 Dir -> "SOME_DIRECTORY"
 File -> "FILE_NAME"
 """)
 
+# CHANGED FileList TO File
+# Cmd -> "copy" File "to" Dir
+# Cmd -> "delete" File
+# Cmd -> "move" File "to" Dir
 
+# NOT WORKING:
+# FileExp -> FileList | Quantifier "in" Dir
+# Quantifier -> "EVERYTHING" | "all files"
+# FileList -> File "," FileList | File "and" File | File
 
 # right recursive filelist:
 #FileList -> File "," FileList | FilePair | File
 
 # not working:
 #Cmd -> "move" FileExp "to" Dir
-
-# maybe not worknig
-# Cmd -> "copy" FileList "to" Dir
-# Cmd -> "delete" FileList
-# Cmd -> "move" FileList "to" Dir
 
 # print all possible sentence permutations with a depth of '4'. Change
 # the value of 'n' to get more sentences
