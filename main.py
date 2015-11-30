@@ -4,7 +4,6 @@
 import nltk
 from shell import *
 
-
 class main():
     """
     Main class to take user input and send commands to shell.py.
@@ -26,17 +25,25 @@ class main():
         s = Shell()
         #self.main_loop()
 
+
     def main_loop(self):
+        """
+        Main input loop to take user input to send to the grammar.
+        """
         print("Welcome to the Natural Language shell.\n"
                   + "Enter your English commands in the terminal.\n"
                   + "Enter 'dictionary' to print list of supported commands.\n")
-        input = ""
+        inpt = ""
         #Input loop
-        while input != "exit":
+        while inpt != "exit":
             print("")
-            input = input("Enter Command: ")
+            inpt = input("Enter Command: ")
 
     def command(self, string):
+        """
+        General method to strip beginning of string from input.
+        Calls method to deal with the relevant command.
+        """
         #Remove beginning of string
         string = string[8:]
         #Find whitespace after command name and assign it to cmd
@@ -65,6 +72,9 @@ class main():
             self.go(string)
 
     def print(self, string):
+        """
+
+        """
         #Find whitespace before file name
         index = string.index(" ")
         string = string[index + 1:]
@@ -94,7 +104,7 @@ class main():
         str = string[:index]
         print(str)
         #remove str from string
-        string = string[index + 11:]
+        string = string[index + 13:]
         print(string)
         #Find file name
         index = string.index(")")
@@ -122,15 +132,12 @@ class main():
         s.mv_rename(file, name)
 
     def find(self, string):
-        print(string)
         #Find whitespace before file
         index = string.index(" ")
         string = string[index + 1:]
-        print(string)
         #Find file
         index = string.index(")")
         file = string[:index]
-        print(file)
         #Execute
         s.find(file)
 
@@ -161,6 +168,7 @@ class main():
 
 
 m = main()
+#Old
 #m.command("(S (Cmd print (File test.txt)))")
 #m.command("(S (Cmd open (Dir /))")
 #m.command("(S (Cmd write (String foo) to (File derp.txt)))")
@@ -172,7 +180,20 @@ m = main()
 #s.cd("/")
 #m.command("(S (Cmd go back))")
 #m.command("(S (Cmd go home))")
+#"(S (Cmd copy (FileList (File FILE_NAME) (File FILE_NAME2)) to (Dir SOME_DIRECTORY)))"
 
+#new
+# m.command("(S (Cmd print (String test.txt)))")
+# m.command("(S (Cmd open (String /))")
+# m.command("(S (Cmd write (String foo) to (String derp.txt)))")
+# m.command("(S (Cmd rename (String test.txt) to (String test2.txt)))")
+# m.command("(S (Cmd find (String test.txt)))")
+# m.command("(S (Cmd where am i))")
+# m.command("(S (Cmd new folder (String truman)))")
+# m.command("(S (Cmd clear history))")
+# s.cd("/")
+# m.command("(S (Cmd go back))")
+# m.command("(S (Cmd go home))")
 
 #TODO
 #m.command("(S (Cmd copy (FileList (File FILE_NAME)) to (Dir SOME_DIRECTORY)))")
