@@ -158,31 +158,17 @@ class Shell():
         self.cmd.append("pwd")
 
     """
-    Delete 1 or more files. Prints names of deleted files.
-    """
-    def rm_f(self, files):
-        try:
-            cmd = "rm"
-            for file in files:
-                cmd += " " + file
-            call(cmd, shell=True)
-            print(str(files) + " file(s) been deleted.")
-            self.cmd.append(cmd)
-        except FileNotFoundError:
-            print("File(s) don't exist or can't be accessed.")
-
-    """
-    Delete 1 or more directories. Prints names of directories that were
+    Delete 1 or more directories or files. Prints names of directories that were
     successfully deleted.
     """
-    def rm_d(self, dirs):
+    def rm(self, list):
         try:
             cmd = "rm -r"
-            for dir in dirs:
-                cmd += " " + dir
+            for element in list:
+                cmd += " " + element
             call(cmd, shell=True)
             self.cmd.append(cmd)
-            print(str(dirs) + " has/have been deleted.")
+            print(str(list) + " has/have been deleted.")
         except FileNotFoundError:
             print("1 or more Directories don't exist or can't be accessed.")
 
@@ -235,11 +221,12 @@ class Shell():
     """
     def find(self, file):
         try:
-            call(["find", file])
+            check_output(["find", file])
             call(["cat", file])
             self.cmd.append("find " + file)
-        except FileNotFoundError:
+        except CalledProcessError:
             print("File not found.")
+
 
     """
     Get directory list.
@@ -298,19 +285,12 @@ s = Shell()
 #Print current directory name
 #s.pwd()
 
-#Delete file
-# file = ["t.txt"]
-# s.rm_f(file)
-#Delete multiple files
-# files = ["t.txt", "test.txt"]
-# s.rm_f(files)
-
-#Delete directory
-# dir = ["dirTest"]
-# s.rm_d(dir)
+#Delete directories or files
+#l = ["t.txt"]
+#s.rm_d(l)
 #Delete directories
-# dirs = ["dirTest", "dirTest2"]
-# s.rm_d(dirs)
+# l = ["dirTest", "dirTest2"]
+# s.rm_d(l)
 
 #Rename file to given name
 # s.mv_rename("~/CS480", "t.txt")
