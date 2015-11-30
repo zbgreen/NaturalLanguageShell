@@ -12,22 +12,19 @@ Sep -> "then"
 FilePair -> File "and" File
 Cmd -> "write" String "to" File
 Cmd -> "print" File
-Cmd -> "show" File
-Cmd -> "open" File
 Cmd -> "put" String "into" File
 Cmd -> "rename" File "to" String
 Cmd -> "open" Dir
 Cmd -> "find" File
-Cmd -> "delete" Dir
 Cmd -> "copy" File "to" Dir
 Cmd -> "delete" File
 Cmd -> "move" File "to" Dir
-Cmd -> "where" "am" "i"
 Cmd -> "new" "folder" String
 Cmd -> "clear" "history"
 Cmd -> "go" "home"
 Cmd -> "go" "back"
 Cmd -> "go" "to" Dir
+Cmd -> "where" "am" "i"
 Cmd -> "what" "directory" "am" "i" "in"
 Cmd -> "what" "is" "in" Dir
 String -> "SOME_STRING"
@@ -66,7 +63,23 @@ File -> "FILE_NAME"
 #  print(' '.join(sentence))
 
 sent = "rename FILE_NAME to SOME_STRING".split()
-rd_parser = nltk.RecursiveDescentParser(grammar)
-for tree in rd_parser.parse(sent):
+
+#rd_parser = nltk.RecursiveDescentParser(grammar)
+
+
+parser = nltk.ChartParser(grammar)
+for tree in parser.parse(sent):
     print(tree)
+
+
+
+
+
+
+
+
+
+
+
+
 
