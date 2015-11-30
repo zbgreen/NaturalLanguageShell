@@ -9,7 +9,19 @@ from nltk.parse.generate import *
 
 '''
 Accepts a string, returns a 'grammified' version
-of that string-- it will be a parsed tree, but
+of that string-- it will be a parsed tree.
+
+If you use a file or a directory, then make sure
+it is wrapped in single quotes, like 'file' or 'directory'.
+
+Example:
+
+    grammify("rename 'Jazzy_Jeff' to 'Disco_Dave'"")
+
+Returns:
+
+    (S (Cmd rename (String Jazzy_Jeff) to (String Disco_Dave)))
+
 
 '''
 def grammify(sent):
@@ -82,7 +94,7 @@ def grammify(sent):
     for tree in parser.parse(terminals):
         # ????????
         True
-            
+
     # Turn the tree object into a String
     tree_string = str(tree);
 
@@ -99,10 +111,6 @@ def grammify(sent):
 
 
     return(tmp)
-
-t_sent = "  rename 'Jazzy_Jeff' to 'Disco_Dave' "
-
-print(grammify(t_sent))
 
 
 
