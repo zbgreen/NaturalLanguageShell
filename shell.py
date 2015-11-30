@@ -9,13 +9,7 @@ from subprocess import call, check_output, CalledProcessError
 class Shell():
     """
     Call methods to execute the command.
-    Executes the command using given inputs, stores cmd and prints results.
-
-    cmd: for refrencing previous commands.
-    """
-    def __init__(self):
-        self.cmd = []
-    '''Executes the command using given inputs, stores command and directories, and
+    Executes the command using given inputs, stores command and directories, and
     prints results.
 
     !!!WARNING!!!
@@ -29,7 +23,7 @@ class Shell():
     Fields:
     cmd: for referencing previous commands.
     dir: for referencing previous directories.
-    '''
+    """
     def __init__(self):
         self.cmd = []
         self.dir = []
@@ -105,13 +99,6 @@ class Shell():
         os.chdir("/home")
         call("ls")
         self.cmd.append("cd ~")
-
-    # """
-    # Go back a directory. Currently not implemented due to not having directory
-    # history.
-    # """
-    # def cd_b(self):
-    #     print()
         self.dir.append("/home")
 
     """
@@ -171,31 +158,17 @@ class Shell():
         self.cmd.append("pwd")
 
     """
-    Delete 1 or more files. Prints names of deleted files.
-    """
-    def rm_f(self, files):
-        try:
-            cmd = "rm"
-            for file in files:
-                cmd += " " + file
-            call(cmd, shell=True)
-            print(str(files) + " file(s) been deleted.")
-            self.cmd.append(cmd)
-        except FileNotFoundError:
-            print("File(s) don't exist or can't be accessed.")
-
-    """
-    Delete 1 or more directories. Prints names of directories that were
+    Delete 1 or more directories or files. Prints names of directories that were
     successfully deleted.
     """
-    def rm_d(self, dirs):
+    def rm(self, list):
         try:
             cmd = "rm -r"
-            for dir in dirs:
-                cmd += " " + dir
+            for element in list:
+                cmd += " " + element
             call(cmd, shell=True)
             self.cmd.append(cmd)
-            print(str(dirs) + " has/have been deleted.")
+            print(str(list) + " has/have been deleted.")
         except FileNotFoundError:
             print("1 or more Directories don't exist or can't be accessed.")
 
@@ -226,7 +199,6 @@ class Shell():
             for file in files:
                 cmd += " " + file
             cmd += " " + dir
-            print(cmd)
             call(cmd, shell=True)
 
             #print updated directory
@@ -249,11 +221,12 @@ class Shell():
     """
     def find(self, file):
         try:
-            call(["find", file])
+            check_output(["find", file])
             call(["cat", file])
             self.cmd.append("find " + file)
-        except FileNotFoundError:
-            print("File not found.")
+        except CalledProcessError:
+            print("File not found!.")
+
 
     """
     Get directory list.
@@ -292,8 +265,6 @@ s = Shell()
 #cd to home
 # s.cd_h()
 #cd back a directory
-s.cd("/home/zach/PycharmProjects")
-s.cd_b()
 #s.cd("/home/zach/PycharmProjects")
 #s.cd_b()
 #cd to given directory
@@ -314,19 +285,12 @@ s.cd_b()
 #Print current directory name
 #s.pwd()
 
-#Delete file
-# file = ["t.txt"]
-# s.rm_f(file)
-#Delete multiple files
-# files = ["t.txt", "test.txt"]
-# s.rm_f(files)
-
-#Delete directory
-# dir = ["dirTest"]
-# s.rm_d(dir)
+#Delete directories or files
+#l = ["t.txt"]
+#s.rm_d(l)
 #Delete directories
-# dirs = ["dirTest", "dirTest2"]
-# s.rm_d(dirs)
+# l = ["dirTest", "dirTest2"]
+# s.rm_d(l)
 
 #Rename file to given name
 # s.mv_rename("~/CS480", "t.txt")
@@ -348,7 +312,6 @@ s.cd_b()
 # s.find("t.txt")
 
 #Clear history
-s.c_history()
 #s.c_history()
 
 #Go back a directory
