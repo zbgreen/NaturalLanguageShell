@@ -9,8 +9,18 @@ from subprocess import call, check_output, CalledProcessError
 class Shell():
     """
     Call methods to execute the command.
-    Executes the command using given inputs, stores cmd and prints results.
+    Executes the command using given inputs, stores command and directories, and
+    prints results.
 
+    !!!WARNING!!!
+    USE AT YOUR OWN DISCRETION. THIS CODE DIRECTLY EXECUTES OPERATING SYSTEM
+    COMMANDS. WE DID NOT IMPLEMENT INPUT SANITATION SO USE THIS CODE CAREFULLY.
+    POTENTIAL SIDE EFFECTS INCLUDE ALTERING YOUR FILES, DELETING EVERYTHING OFF
+    YOUR COMPUTER AND MORE. CONSULT THE DOCUMENTATION TO SEE IF THIS PROGRAM IS
+    RIGHT FOR YOU.
+    !!!END WARNING!!!
+
+    Fields:
     cmd: for referencing previous commands.
     dir: for referencing previous directories.
     """
@@ -33,6 +43,7 @@ class Shell():
     """
     def c_history(self):
         self.cmd[:] = []
+        print("History deleted.")
 
     """
     See what user is running the commands.
