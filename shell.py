@@ -9,15 +9,13 @@ from subprocess import call, check_output, CalledProcessError
 class Shell():
     """
     Call methods to execute the command.
-<<<<<<< HEAD
     Executes the command using given inputs, stores cmd and prints results.
 
     cmd: for refrencing previous commands.
     """
     def __init__(self):
         self.cmd = []
-=======
-    Executes the command using given inputs, stores command and directories, and
+    '''Executes the command using given inputs, stores command and directories, and
     prints results.
 
     !!!WARNING!!!
@@ -31,7 +29,7 @@ class Shell():
     Fields:
     cmd: for referencing previous commands.
     dir: for referencing previous directories.
-    """
+    '''
     def __init__(self):
         self.cmd = []
         self.dir = []
@@ -44,7 +42,6 @@ class Shell():
         dir = dir[:-1]
 
         self.dir.append(dir)
->>>>>>> 0cdf21db7d239416676d61f72820b1c86ff1bdff
 
     """
     Clears current class's representation of history. Does not clear the bash
@@ -52,10 +49,7 @@ class Shell():
     """
     def c_history(self):
         self.cmd[:] = []
-<<<<<<< HEAD
-=======
         print("History deleted.")
->>>>>>> 0cdf21db7d239416676d61f72820b1c86ff1bdff
 
     """
     See what user is running the commands.
@@ -102,10 +96,7 @@ class Shell():
         os.chdir("/")
         call("ls")
         self.cmd.append("cd")
-<<<<<<< HEAD
-=======
         self.dir.append("/")
->>>>>>> 0cdf21db7d239416676d61f72820b1c86ff1bdff
 
     """
     Change directory to home.
@@ -114,7 +105,6 @@ class Shell():
         os.chdir("/home")
         call("ls")
         self.cmd.append("cd ~")
-<<<<<<< HEAD
 
     # """
     # Go back a directory. Currently not implemented due to not having directory
@@ -122,7 +112,6 @@ class Shell():
     # """
     # def cd_b(self):
     #     print()
-=======
         self.dir.append("/home")
 
     """
@@ -140,7 +129,6 @@ class Shell():
             self.cmd.append("cd -")
         except IndexError:
             print("No directory to go back to.")
->>>>>>> 0cdf21db7d239416676d61f72820b1c86ff1bdff
 
     """
     Go to the given directory.
@@ -150,10 +138,7 @@ class Shell():
             os.chdir(dir)
             call("ls")
             self.cmd.append("cd " + dir)
-<<<<<<< HEAD
-=======
             self.dir.append(dir)
->>>>>>> 0cdf21db7d239416676d61f72820b1c86ff1bdff
         except FileNotFoundError:
             print("The file or directory " + dir + " doesn't exist.")
 
@@ -173,11 +158,8 @@ class Shell():
             #print given directory without changing current directory
             newCmd = "ls " + dest
             call(newCmd, shell=True)
-<<<<<<< HEAD
-=======
 
             self.cmd.append(cmd)
->>>>>>> 0cdf21db7d239416676d61f72820b1c86ff1bdff
         except FileNotFoundError:
             print("File(s) or destination don't exist or can't be accessed.")
 
@@ -244,10 +226,7 @@ class Shell():
             for file in files:
                 cmd += " " + file
             cmd += " " + dir
-<<<<<<< HEAD
             print(cmd)
-=======
->>>>>>> 0cdf21db7d239416676d61f72820b1c86ff1bdff
             call(cmd, shell=True)
 
             #print updated directory
@@ -276,8 +255,6 @@ class Shell():
         except FileNotFoundError:
             print("File not found.")
 
-<<<<<<< HEAD
-=======
     """
     Get directory list.
     """
@@ -290,7 +267,6 @@ class Shell():
     def get_cmd(self):
         return self.cmd
 
->>>>>>> 0cdf21db7d239416676d61f72820b1c86ff1bdff
 #Initialize object
 s = Shell()
 
@@ -316,13 +292,10 @@ s = Shell()
 #cd to home
 # s.cd_h()
 #cd back a directory
-<<<<<<< HEAD
 s.cd("/home/zach/PycharmProjects")
 s.cd_b()
-=======
 #s.cd("/home/zach/PycharmProjects")
 #s.cd_b()
->>>>>>> 0cdf21db7d239416676d61f72820b1c86ff1bdff
 #cd to given directory
 #s.cd("/home")
 
@@ -375,11 +348,8 @@ s.cd_b()
 # s.find("t.txt")
 
 #Clear history
-<<<<<<< HEAD
 s.c_history()
-=======
 #s.c_history()
 
 #Go back a directory
 #s.cd_b()
->>>>>>> 0cdf21db7d239416676d61f72820b1c86ff1bdff
