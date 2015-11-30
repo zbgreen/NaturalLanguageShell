@@ -9,13 +9,7 @@ from subprocess import call, check_output, CalledProcessError
 class Shell():
     """
     Call methods to execute the command.
-    Executes the command using given inputs, stores cmd and prints results.
-
-    cmd: for refrencing previous commands.
-    """
-    def __init__(self):
-        self.cmd = []
-    '''Executes the command using given inputs, stores command and directories, and
+    Executes the command using given inputs, stores command and directories, and
     prints results.
 
     !!!WARNING!!!
@@ -29,7 +23,7 @@ class Shell():
     Fields:
     cmd: for referencing previous commands.
     dir: for referencing previous directories.
-    '''
+    """
     def __init__(self):
         self.cmd = []
         self.dir = []
@@ -105,13 +99,6 @@ class Shell():
         os.chdir("/home")
         call("ls")
         self.cmd.append("cd ~")
-
-    # """
-    # Go back a directory. Currently not implemented due to not having directory
-    # history.
-    # """
-    # def cd_b(self):
-    #     print()
         self.dir.append("/home")
 
     """
@@ -212,7 +199,6 @@ class Shell():
             for file in files:
                 cmd += " " + file
             cmd += " " + dir
-            print(cmd)
             call(cmd, shell=True)
 
             #print updated directory
@@ -239,7 +225,7 @@ class Shell():
             call(["cat", file])
             self.cmd.append("find " + file)
         except CalledProcessError:
-            print("File not found.")
+            print("File not found!.")
 
 
     """
@@ -279,8 +265,6 @@ s = Shell()
 #cd to home
 # s.cd_h()
 #cd back a directory
-s.cd("/home/zach/PycharmProjects")
-s.cd_b()
 #s.cd("/home/zach/PycharmProjects")
 #s.cd_b()
 #cd to given directory
@@ -328,7 +312,6 @@ s.cd_b()
 # s.find("t.txt")
 
 #Clear history
-s.c_history()
 #s.c_history()
 
 #Go back a directory
