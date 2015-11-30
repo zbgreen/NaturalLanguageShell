@@ -9,15 +9,7 @@ from nltk.parse.generate import *
 
 grammar = nltk.CFG.fromstring("""
 S -> Cmd | Cmd Sep S
-Sep -> "then" 
-String -> "SOME_STRING"
-Sep -> "then" | "and"
-Dir -> "SOME_DIRECTORY"
-DirList -> "SOME_DIRECTORY_LIST"
-File -> "FILE_NAME"
-FileExp -> FileList | Quantifier "in" Dir
-Quantifier -> "EVERYTHING" | "all files"
-FileList -> File "," FileList | File "and" File | File
+Sep -> "then"
 FilePair -> File "and" File
 Cmd -> "write" String "to" File
 Cmd -> "print" File
@@ -25,7 +17,7 @@ Cmd -> "show" File
 Cmd -> "open" File
 Cmd -> "put" String "into" File
 Cmd -> "rename" File "to" String
-Cmd -> "rename" File "to" Name
+Cmd -> "rename" File "to" String
 Cmd -> "open" Dir
 Cmd -> "what is in" Dir
 Cmd -> "where am i"
@@ -35,29 +27,31 @@ Cmd -> "find" File
 Cmd -> "clear history"
 Cmd -> "go home"
 Cmd -> "go back"
+Cmd -> "delete" Dir
+Cmd -> "go to" Dir
+Cmd -> "copy" File "to" Dir
+Cmd -> "delete" File
+Cmd -> "move" File "to" Dir
 String -> "SOME_STRING"
 Dir -> "SOME_DIRECTORY"
 File -> "FILE_NAME"
-
-
-
-Cmd -> "delete" DirList
-Cmd -> "go to" DirList
-Cmd -> "copy" FileList "to" Dir
-Cmd -> "delete" FileList
-Cmd -> "move" FileList "to" Dir
 """)
+
+# CHANGED FileList TO File
+# Cmd -> "copy" File "to" Dir
+# Cmd -> "delete" File
+# Cmd -> "move" File "to" Dir
+
+# NOT WORKING:
+# FileExp -> FileList | Quantifier "in" Dir
+# Quantifier -> "EVERYTHING" | "all files"
+# FileList -> File "," FileList | File "and" File | File
 
 # right recursive filelist:
 #FileList -> File "," FileList | FilePair | File
 
 # not working:
 #Cmd -> "move" FileExp "to" Dir
-
-# maybe not worknig
-# Cmd -> "copy" FileList "to" Dir
-# Cmd -> "delete" FileList
-# Cmd -> "move" FileList "to" Dir
 
 # print all possible sentence permutations with a depth of '4'. Change
 # the value of 'n' to get more sentences
@@ -69,8 +63,4 @@ sent = "rename FILE_NAME to SOME_STRING".split()
 rd_parser = nltk.RecursiveDescentParser(grammar)
 for tree in rd_parser.parse(sent):
     print(tree)
-for sentence in generate(grammar, n=20):
-  print(' '.join(sentence))
-
-
 

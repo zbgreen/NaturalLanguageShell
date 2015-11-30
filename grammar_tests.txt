@@ -1,7 +1,0 @@
-List -> Item "," List | Pair | Item
-Pair -> Item "and" Item
-
-FileList -> File "," FileList | File "and" File | File
-DirLIst -> Dir "," DirList | Dir "and" Dir | Dir
-
-A string list would be similar
