@@ -6,69 +6,93 @@ from nltk.corpus import *
 from nltk.parse.generate import *
 
 
-# regex tagger
-pattern = [
-	(r'(go|write|print|copy|delete|open)$', 'FIRST_WORD'),
-	(r'()$', 'PREP'),
-	(r'()$', ''),
-	(r'()$', ''),
-	(r'"[^\]]*"$', '')
-]
-
-# based on Aaron's grammar
+#EDITED GRAMMAR
 grammar = nltk.CFG.fromstring("""
 S -> Cmd | Cmd Sep S
 Sep -> "then"
-FilePair -> File "and" File
-Cmd -> "write" String "to" File
-Cmd -> "print" File
-Cmd -> "show" File
-Cmd -> "open" File
-Cmd -> "put" String "into" File
-Cmd -> "rename" File "to" String
-Cmd -> "open" Dir
-Cmd -> "what is in" Dir
-Cmd -> "where am i"
-Cmd -> "what directory am i in"
-Cmd -> "new folder" String
-Cmd -> "find" File
-Cmd -> "clear history"
-Cmd -> "go home"
-Cmd -> "go back"
-Cmd -> "delete" Dir
-Cmd -> "go to" Dir
-Cmd -> "copy" File "to" Dir
-Cmd -> "delete" File
-Cmd -> "move" File "to" Dir
-String -> "SOME_STRING"
-Dir -> "SOME_DIRECTORY"
-File -> "FILE_NAME"
+Cmd -> "write" String "to" String
+Cmd -> "print" String
+Cmd -> "put" String "into" String
+Cmd -> "rename" String "to" String
+Cmd -> "open" String
+Cmd -> "find" String
+Cmd -> "copy" String "to" String
+Cmd -> "delete" String
+Cmd -> "move" String "to" String
+Cmd -> "new" "folder" String
+Cmd -> "clear" "history"
+Cmd -> "go" "home"
+Cmd -> "go" "back"
+Cmd -> "go" "to" String
+Cmd -> "where" "am" "i"
+Cmd -> "what" "directory" "am" "i" "in"
+Cmd -> "what" "is" "in" String
+String -> "STRING"
 """)
 
-# CHANGED FileList TO File
-# Cmd -> "copy" File "to" Dir
-# Cmd -> "delete" File
-# Cmd -> "move" File "to" Dir
+# Example sentence
+sent = "  rename 'Jazzy_Jeff' to 'Disco_Dave' ".split()
 
-# NOT WORKING:
-# FileExp -> FileList | Quantifier "in" Dir
-# Quantifier -> "EVERYTHING" | "all files"
-# FileList -> File "," FileList | File "and" File | File
 
-# right recursive filelist:
-#FileList -> File "," FileList | FilePair | File
 
-# not working:
-#Cmd -> "move" FileExp "to" Dir
 
-# print all possible sentence permutations with a depth of '4'. Change
-# the value of 'n' to get more sentences
+# REGEX identifiers to tag words with their respective
+# parts of speech as either commands, prepositions, locations, or strings
+pattern = [
+	(r'(write|print|put|rename|open|find|copy|delete|move|clear|go)$', 'COMMAND'),
+	(r'(into|to|in)$', 'PREP'),
+	(r'(home|back)$', 'LOCATION'),
+	(r'\'[^\]]*\'$', 'STRING')
+]
 
-#for sentence in generate(grammar, n=20):
-#  print(' '.join(sentence))
 
-sent = "rename FILE_NAME to SOME_STRING".split()
-rd_parser = nltk.RecursiveDescentParser(grammar)
-for tree in rd_parser.parse(sent):
-    print(tree)
+
+# Set up the tagger for regex
+tagger = nltk.RegexpTagger(pattern)
+
+# List of terminal classifiers and their actual string counterparts
+terminals = []
+opp_terminals = []
+
+# Separate out the parts of speech from the sentence
+# and add them to a list of terminals and
+# a list of actual proper nouns
+for (token, tag) in tagger.tag(sent):
+	if tag in ['PREP', 'COMMAND', 'LOCATION']:
+		terminals.append(token)
+	elif tag == 'STRING':
+		terminals.append(tag)
+		opp_terminals.append(token)
+
+	else: #if None
+		terminals.append(token)
+
+# Parse out the grammar and pass in the terminals
+# from the tokenized words
+parser = nltk.ChartParser(grammar)
+for tree in parser.parse(terminals):
+    print(tree) # type nltk.tree.Tree
+
+# Turn the tree object into a String
+tree_string = str(tree);
+
+
+# Zip the two lists together while replacing the
+# word "STRING" with the actual words back that
+# were previously used before we stripped them back out for
+# use in our grammar
+tmp = tree_string
+for i in range(len(opp_terminals)):
+
+	# remove the apostrophies around the word
+	tmp = re.sub(r'STRING', (opp_terminals[i].strip('\'')), tmp, 1);
+
+print("\nThe final-ish string\n")
+
+print(tmp)
+
+
+
+
+
 
