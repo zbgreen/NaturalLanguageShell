@@ -11,10 +11,21 @@ class Shell():
     Call methods to execute the command.
     Executes the command using given inputs, stores cmd and prints results.
 
-    cmd: for refrencing previous commands.
+    cmd: for referencing previous commands.
+    dir: for referencing previous directories.
     """
     def __init__(self):
         self.cmd = []
+        self.dir = []
+
+        #Add initial directory to list
+        dir = check_output("pwd")
+        #Decode from byte literals to string
+        dir = dir.decode("utf-8")
+        #remove "\n" from string
+        dir = dir[:-1]
+
+        self.dir.append(dir)
 
     """
     Clears current class's representation of history. Does not clear the bash
@@ -68,6 +79,7 @@ class Shell():
         os.chdir("/")
         call("ls")
         self.cmd.append("cd")
+        self.dir.append("/")
 
     """
     Change directory to home.
@@ -76,13 +88,23 @@ class Shell():
         os.chdir("/home")
         call("ls")
         self.cmd.append("cd ~")
+        self.dir.append("/home")
 
-    # """
-    # Go back a directory. Currently not implemented due to not having directory
-    # history.
-    # """
-    # def cd_b(self):
-    #     print()
+    """
+    Go back a directory. Prints name of current directory.
+    """
+    def cd_b(self):
+
+        try:
+            #Pop current directory
+            del self.dir[-1]
+            #Get last directory from list
+            dir = self.dir[-1]
+            os.chdir(dir)
+            call("pwd")
+            self.cmd.append("cd -")
+        except IndexError:
+            print("No directory to go back to.")
 
     """
     Go to the given directory.
@@ -92,6 +114,7 @@ class Shell():
             os.chdir(dir)
             call("ls")
             self.cmd.append("cd " + dir)
+            self.dir.append(dir)
         except FileNotFoundError:
             print("The file or directory " + dir + " doesn't exist.")
 
@@ -111,6 +134,8 @@ class Shell():
             #print given directory without changing current directory
             newCmd = "ls " + dest
             call(newCmd, shell=True)
+
+            self.cmd.append(cmd)
         except FileNotFoundError:
             print("File(s) or destination don't exist or can't be accessed.")
 
@@ -177,7 +202,6 @@ class Shell():
             for file in files:
                 cmd += " " + file
             cmd += " " + dir
-            print(cmd)
             call(cmd, shell=True)
 
             #print updated directory
@@ -206,6 +230,18 @@ class Shell():
         except FileNotFoundError:
             print("File not found.")
 
+    """
+    Get directory list.
+    """
+    def get_dir(self):
+        return self.dir
+
+    """
+    Get command list.
+    """
+    def get_cmd(self):
+        return self.cmd
+
 #Initialize object
 s = Shell()
 
@@ -231,8 +267,8 @@ s = Shell()
 #cd to home
 # s.cd_h()
 #cd back a directory
-s.cd("/home/zach/PycharmProjects")
-s.cd_b()
+#s.cd("/home/zach/PycharmProjects")
+#s.cd_b()
 #cd to given directory
 #s.cd("/home")
 
@@ -285,4 +321,7 @@ s.cd_b()
 # s.find("t.txt")
 
 #Clear history
-s.c_history()
+#s.c_history()
+
+#Go back a directory
+#s.cd_b()
