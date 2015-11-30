@@ -36,7 +36,6 @@ def grammify(sent):
     Cmd -> "rename" String "to" String
     Cmd -> "open" String
     Cmd -> "find" String
-    Cmd -> "copy" String "to" String
     Cmd -> "delete" String
     Cmd -> "move" String "to" String
     Cmd -> "new" "folder" String
@@ -47,8 +46,17 @@ def grammify(sent):
     Cmd -> "where" "am" "i"
     Cmd -> "what" "directory" "am" "i" "in"
     Cmd -> "what" "is" "in" String
+    Cmd -> "copy" StringList "to" String
+    Cmd -> "delete" StringList
+    Cmd -> "move" StringList "to" String
+    StringList -> String REST
+    REST -> String | String REST
     String -> "STRING"
     """)
+
+
+
+
 
     # Example sentence
     sent = sent.split()
@@ -88,12 +96,18 @@ def grammify(sent):
 
     # Parse out the grammar and pass in the terminals
     # from the tokenized words
+    chartParser = nltk.ChartParser(grammar)
 
-    # TO DO????
-    parser = nltk.ChartParser(grammar)
-    for tree in parser.parse(terminals):
+    for tree in chartParser.parse(terminals):
         # ????????
         True
+
+
+
+
+
+    # Remove RESTS to get rid of unnecessary nesting
+#    print(tree.collapse_unary(collapsePOS=True))
 
     # Turn the tree object into a String
     tree_string = str(tree);
@@ -111,6 +125,18 @@ def grammify(sent):
 
 
     return(tmp)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
