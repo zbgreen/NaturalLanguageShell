@@ -1,4 +1,5 @@
 #Natural Langauge Shell
+#Zach Green, Cindy La, Aaron Gershman, Jonathan Price
 
 import nltk
 from shell import *
@@ -168,6 +169,7 @@ m = main()
 #s.cd("/")
 #m.command("(S (Cmd go back))")
 #m.command("(S (Cmd go home))")
+
 
 #TODO
 #m.command("(S (Cmd copy (FileList (File FILE_NAME)) to (Dir SOME_DIRECTORY)))")
