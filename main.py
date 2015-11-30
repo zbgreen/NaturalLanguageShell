@@ -4,8 +4,11 @@
 import nltk
 from shell import *
 
-class main():
 
+class main():
+    """
+    Main class to take user input and send commands to shell.py.
+    """
     def __init__(self):
         dictionary = {'print': 'cat',
                       'write': 'echo',
